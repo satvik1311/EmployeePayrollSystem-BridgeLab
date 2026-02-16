@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1708000000001,
+    "name": "Rahul Sharma",
+    "department": "IT",
+    "salary": 50000
+  },
+  {
+    "id": 1708000000002,
+    "name": "Priya Verma",
+    "department": "HR",
+    "salary": 45000
+  },
+  {
+    "id": 1708000000003,
+    "name": "Amit Singh",
+    "department": "Finance",
+    "salary": 60000
+  },
+  {
+    "id": 1708000000004,
+    "name": "Neha Gupta",
+    "department": "Marketing",
+    "salary": 40000
+  }
+]
