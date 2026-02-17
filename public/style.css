@@ -1,0 +1,22 @@
+*{
+    margin: 2;
+    padding: 1;
+    box-sizing: border-box;
+}
+header {
+    background-color: #e1d4d4;
+    color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+header div {
+    display: flex;
+    align-items: center;
+    color: rgb(38, 54, 21);
+}
+
+#icon{
+    font-size: 40px;
+    margin-right: 15px;
+}

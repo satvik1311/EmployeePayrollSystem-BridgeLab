@@ -22,5 +22,11 @@
     "name": "Neha Gupta",
     "department": "Marketing",
     "salary": 40000
+  },
+  {
+    "id": 1771325844938,
+    "name": "Rohit Singh",
+    "department": "Finance",
+    "salary": 60000
   }
 ]
