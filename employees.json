@@ -1,15 +1,11 @@
 [
   {
-    "id": 1708000000001,
-    "name": "Rahul Sharma",
-    "department": "IT",
-    "salary": 50000
-  },
-  {
     "id": 1708000000002,
     "name": "Priya Verma",
     "department": "HR",
-    "salary": 45000
+    "gender": "Male",
+    "profile": "avatar2.jpeg",
+    "salary": 58500
   },
   {
     "id": 1708000000003,
@@ -21,12 +17,24 @@
     "id": 1708000000004,
     "name": "Neha Gupta",
     "department": "Marketing",
+    "gender": "Male",
+    "profile": "avatar2.jpeg",
     "salary": 40000
   },
   {
-    "id": 1771325844938,
-    "name": "Rohit Singh",
-    "department": "Finance",
-    "salary": 60000
+    "id": 1771409834753,
+    "name": "Ankit",
+    "department": "Engineer",
+    "gender": "Male",
+    "profile": "avatar3.jpeg",
+    "salary": 99500
+  },
+  {
+    "id": 1771410534680,
+    "name": "Yash",
+    "department": "Marketing",
+    "gender": "Male",
+    "profile": "avatar1.jpeg",
+    "salary": 212121
   }
 ]

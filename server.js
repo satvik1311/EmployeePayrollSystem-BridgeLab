@@ -2,63 +2,106 @@ const express = require('express');
 const app = express();
 const PORT = 3000;
 
-// Importing file handler functions
+// Import file read/write functions
 const { readFile, writeFile } = require('./payroll-app/modules/fileHandler');
 
+// Middlewares
+app.use(express.json());  // Parse JSON data
+app.use(express.urlencoded({ extended: true }));  // Parse form data
+app.use(express.static("public"));  // Serve static files (CSS)
+app.set("view engine", "ejs");  // Set EJS as template engine
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.set("view engine","ejs");
-app.use(express.static("public"));
 
+/* ================= DASHBOARD ================= */
 
-// get 
+// Display dashboard with employee data & statistics
 app.get('/', (req, res) => {
-    const employees = readFile();   // JSON file se data read karo
-    res.render('index', { employees });  // index.ejs ko data bhejo
+
+    const employees = readFile();  // Read employee data from JSON
+
+    const totalEmployees = employees.length;  // Count employees
+
+    const totalSalary = employees.reduce((sum, emp) => 
+        sum + emp.salary, 0);  // Calculate total salary
+
+    const totalNetSalary = employees.reduce((sum, emp) => 
+        sum + (emp.salary * 0.90), 0);  // Salary after 10% tax
+
+    const averageSalary = totalEmployees > 0
+        ? (totalSalary / totalEmployees).toFixed(2)
+        : 0;  // Calculate average salary safely
+
+    const departmentCount =
+        new Set(employees.map(emp => emp.department)).size;  
+        // Count unique departments
+
+    res.render('index', {
+        employees,
+        totalEmployees,
+        totalSalary,
+        totalNetSalary: totalNetSalary.toFixed(2),
+        averageSalary,
+        departmentCount
+    });
 });
 
-// post
-app.post('/add',(req,res)=>{
-   
-    const { name, department, salary } = req.body;
 
-    const employees = readFile();  // Pehle se existing data read karo
- console.log(employees);
- 
-    
+/* ================= ADD EMPLOYEE ================= */
+
+// Show add employee form
+app.get('/add', (req, res) => {
+    res.render('add');
+});
+
+// Handle form submission & add new employee
+app.post('/add', (req, res) => {
+
+    const { name, department, salary, gender, profile } = req.body;
+
+    const employees = readFile();
+
     const newEmployee = {
-        id: Date.now(),  // Unique ID generate karo
-        name,   
+        id: Date.now(),
+        name,
         department,
-        salary: parseFloat(salary)  // Salary ko number me convert karo
+        gender,
+        profile: profile || "avatar1.png",
+        salary: Number(salary)
     };
-    
-    
-    
-    employees.push(newEmployee);  // Naya employee data array me add karo
-    writeFile(employees);  // Updated data ko file me write karo
-    res.redirect('/');  // Form submit hone ke baad home page pe redirect karo
 
-
-});
-
-// delete
-app.get('/delete/:id', (req, res) => {
-    const employeeId = parseInt(req.params.id);
-    let employees = readFile();
-
-    employees = employees.filter(emp => emp.id !== employeeId);
-
+    employees.push(newEmployee);
     writeFile(employees);
+
     res.redirect('/');
 });
 
 
-// edit
-// Show Edit Form
-app.get('/edit/:id', (req, res) => {
+
+/* ================= DELETE EMPLOYEE ================= */
+
+// Delete employee by ID
+app.get('/delete/:id', (req, res) => {
+
     const employeeId = parseInt(req.params.id);
+
+    let employees = readFile();
+
+    employees = employees.filter(emp => emp.id !== employeeId);  
+    // Remove employee from array
+
+    writeFile(employees);  // Save changes
+
+    res.redirect('/');
+});
+
+
+/* ================= EDIT EMPLOYEE ================= */
+
+// Show edit form with existing data
+app.get('/edit/:id', (req, res) => {
+
+    const employeeId = parseInt(req.params.id);
+
     const employees = readFile();
 
     const employee = employees.find(emp => emp.id === employeeId);
@@ -70,11 +113,11 @@ app.get('/edit/:id', (req, res) => {
     res.render('edit', { employee });
 });
 
-
-// Handle Update
+// Handle update submission
 app.post('/edit/:id', (req, res) => {
+
     const employeeId = parseInt(req.params.id);
-    const { name, department, salary } = req.body;
+    const { name, department, salary, gender, profile } = req.body;
 
     let employees = readFile();
 
@@ -85,6 +128,8 @@ app.post('/edit/:id', (req, res) => {
             id: employeeId,
             name,
             department,
+            gender,
+            profile,
             salary: Number(salary)
         };
 
@@ -96,7 +141,9 @@ app.post('/edit/:id', (req, res) => {
 
 
 
+/* ================= SERVER ================= */
 
-app.listen(PORT,()=>{
+// Start server
+app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);
 });
