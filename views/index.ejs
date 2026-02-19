@@ -28,14 +28,32 @@
 <div class="container">
 
     <!-- Heading + Add button ek hi line me -->
-    <div class="section-header">
-        <h2>Employee Details</h2>
+ <div class="section-header">
+    <h2>Employee Details</h2>
 
-        <!-- Add page pe redirect karega -->
+    <div class="header-actions">
+
+        <!-- Search Form -->
+        <form action="/" method="GET" class="search-form">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Search by name..."
+                value="<%= typeof search !== 'undefined' ? search : '' %>"
+            >
+            <button type="submit">
+                <i class="bi bi-search"></i>
+            </button>
+        </form>
+
+        <!-- Add User Button -->
         <a href="/add" class="btn-add">
             <i class="bi bi-plus-lg"></i> Add User
         </a>
+
     </div>
+</div>
+
 
 
     <!-- ===== Stats Cards Section ===== -->

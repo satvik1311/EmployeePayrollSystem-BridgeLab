@@ -36,5 +36,13 @@
     "gender": "Male",
     "profile": "avatar1.jpeg",
     "salary": 212121
+  },
+  {
+    "id": 1771499709884,
+    "name": "muthbaaz",
+    "department": "Software Developer",
+    "gender": "Male",
+    "profile": "avatar3.jpeg",
+    "salary": 1000000
   }
 ]
